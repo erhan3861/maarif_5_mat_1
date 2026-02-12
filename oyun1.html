@@ -20,7 +20,163 @@
             align-items: center;
             justify-content: center;
             color: #c9d1d9;
+            overflow: hidden;
         }
+
+        /* --- KODLA BUTONU (SAĞ ÜST) --- */
+        .code-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #238636, #2ea043); /* GitHub Yeşili */
+            color: white;
+            border: 1px solid #2ea043;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(46, 160, 67, 0.3);
+            z-index: 50;
+        }
+
+        .code-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(46, 160, 67, 0.5);
+            background: linear-gradient(135deg, #2ea043, #238636);
+        }
+
+        /* --- ANA MENÜ BUTONU (SOL ÜST) --- */
+        .back-btn {
+            position: absolute;
+            top: 20px; 
+            left: 20px;
+            text-decoration: none;
+            color: #c9d1d9;
+            background: rgba(22, 27, 34, 0.7);
+            backdrop-filter: blur(5px);
+            font-size: 0.95rem;
+            border: 1px solid #30363d;
+            padding: 10px 20px;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .back-btn:hover { 
+            background: rgba(48, 54, 61, 0.9); 
+            color: #58a6ff;
+            border-color: #58a6ff;
+            box-shadow: 0 0 15px rgba(88, 166, 255, 0.2);
+            transform: translateX(3px);
+        }
+
+        /* --- KODLAMA POPUP MODAL --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-card {
+            background: #161b22;
+            width: 90%;
+            max-width: 500px;
+            border: 2px solid #58a6ff;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            transform: translateY(-50px);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 50px rgba(88, 166, 255, 0.2);
+        }
+
+        .modal-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #58a6ff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 15px;
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            background: none;
+            border: none;
+            color: #8b949e;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .close-modal-btn:hover { color: #f85149; }
+
+        /* Adım Kartları */
+        .step-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left;
+        }
+
+        .step-item {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s;
+        }
+        
+        .step-item:hover { transform: translateX(5px); border-color: #58a6ff; }
+
+        .step-icon {
+            font-size: 2rem;
+            width: 50px;
+            text-align: center;
+        }
+
+        .step-content h4 { margin: 0 0 5px 0; color: #fff; }
+        .step-content p { margin: 0; font-size: 0.9rem; color: #8b949e; }
+
+        .action-link {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 8px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.85rem;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .action-link:hover { transform: scale(1.05); }
+
+        .github-link { background: #238636; box-shadow: 0 4px 10px rgba(35, 134, 54, 0.3); }
+        .talent-link { background: #8a4bfa; box-shadow: 0 4px 10px rgba(138, 75, 250, 0.3); }
 
         /* --- Oyun Çerçevesi --- */
         .game-terminal {
@@ -35,7 +191,6 @@
             overflow: hidden;
         }
 
-        /* Başlık Kısmı */
         .header-bar {
             border-bottom: 1px solid #30363d;
             padding-bottom: 15px;
@@ -45,125 +200,49 @@
             align-items: center;
         }
 
-        .title {
-            color: #2ea043; /* Terminal Yeşili */
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
+        .title { color: #2ea043; font-family: 'Courier New', monospace; font-weight: bold; font-size: 1.5rem; }
+        .score-board { background: #21262d; padding: 5px 15px; border-radius: 20px; font-weight: bold; color: #58a6ff; }
 
-        .score-board {
-            background: #21262d;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            color: #58a6ff;
-        }
-
-        /* --- Soru Kartı (Dosya) --- */
         .case-file {
-            background: #21262d;
-            border-left: 5px solid #1f6feb;
-            padding: 20px;
-            border-radius: 5px;
-            margin-bottom: 30px;
-            animation: fadeIn 0.5s ease;
+            background: #21262d; border-left: 5px solid #1f6feb; padding: 20px;
+            border-radius: 5px; margin-bottom: 30px; animation: fadeIn 0.5s ease;
         }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .case-source { font-size: 0.9rem; color: #8b949e; margin-bottom: 5px; }
+        .case-question { font-size: 1.4rem; color: white; font-weight: 600; }
 
-        .case-source {
-            font-size: 0.9rem;
-            color: #8b949e;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-
-        .case-question {
-            font-size: 1.4rem;
-            color: white;
-            font-weight: 600;
-        }
-
-        /* --- Seçenekler --- */
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr; /* Mobilde tek sütun */
-            gap: 15px;
-        }
-
-        @media(min-width: 600px) {
-            .options-grid { grid-template-columns: 1fr 1fr; }
-        }
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media(min-width: 600px) { .options-grid { grid-template-columns: 1fr 1fr; } }
 
         .option-btn {
-            background: #30363d;
-            color: #c9d1d9;
-            border: 1px solid #30363d;
-            padding: 20px;
-            font-size: 1.8rem;
-            font-family: 'Courier New', monospace; /* Sayılar için monospace */
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: center;
+            background: #30363d; color: #c9d1d9; border: 1px solid #30363d; padding: 20px;
+            font-size: 1.8rem; font-family: 'Courier New', monospace; border-radius: 8px;
+            cursor: pointer; transition: all 0.2s; text-align: center;
         }
+        .option-btn:hover { background: #58a6ff; color: #0d1117; transform: scale(1.02); }
 
-        .option-btn:hover {
-            background: #58a6ff;
-            color: #0d1117;
-            transform: scale(1.02);
-        }
-
-        /* --- Geri Bildirim --- */
         .feedback-modal {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(13, 17, 23, 0.95);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(13, 17, 23, 0.95); display: none; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center; padding: 20px; z-index: 20;
         }
-
         .fb-icon { font-size: 4rem; margin-bottom: 20px; }
         .fb-text { font-size: 1.5rem; margin-bottom: 20px; color: white; }
-        .fb-sub { font-size: 1rem; color: #8b949e; margin-bottom: 30px; max-width: 80%; }
-
-        .next-btn {
-            background: #2ea043;
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .back-btn {
-            position: absolute;
-            top: 20px; left: 20px;
-            text-decoration: none;
-            color: #8b949e;
-            font-size: 0.9rem;
-            border: 1px solid #30363d;
-            padding: 8px 15px;
-            border-radius: 5px;
-        }
-        .back-btn:hover { background: #30363d; color: white; }
+        .fb-sub { font-size: 1rem; color: #8b949e; margin-bottom: 30px; }
+        .next-btn { background: #2ea043; color: white; border: none; padding: 15px 40px; border-radius: 8px; cursor: pointer; font-weight: bold; }
 
     </style>
 </head>
 <body>
 
-    <a href="index.html" class="back-btn">⬅ Ana Menü</a>
+    <a href="index.html" class="back-btn">
+        <span>🏠</span> Ana Menü
+    </a>
+
+    <button onclick="openCodeModal()" class="code-btn">
+        <span>💻</span> KODLA
+    </button>
 
     <div class="game-terminal">
         <div class="header-bar">
@@ -176,9 +255,7 @@
                 <div class="case-source">📁 VERİ KAYNAĞI: <span id="source-txt">TÜİK 2023 RAPORU</span></div>
                 <div class="case-question" id="question-txt">Soru yükleniyor...</div>
             </div>
-
-            <div class="options-grid" id="options-container">
-                </div>
+            <div class="options-grid" id="options-container"></div>
         </div>
 
         <div class="feedback-modal" id="feedback-area">
@@ -194,11 +271,78 @@
             <div class="fb-sub">Gerçek dünya verilerini başarıyla analiz ettin.</div>
             <a href="index.html" class="next-btn" style="text-decoration:none;">Ana Menüye Dön</a>
         </div>
+    </div>
 
+    <div class="modal-overlay" id="codeModal">
+        <div class="modal-card">
+            <button class="close-modal-btn" onclick="closeCodeModal()">×</button>
+            <div class="modal-header">🚀 Kodlama Laboratuvarı</div>
+            
+            <p style="color: #8b949e; margin-bottom: 25px;">Kendi oyununu yapmak için adımları takip et!</p>
+
+            <div class="step-container">
+                <div class="step-item">
+                    <div class="step-icon">🐙</div>
+                    <div class="step-content">
+                        <h4>1. Kaynak Kodu Al</h4>
+                        <p>GitHub sayfasına git ve <b>oyun1.html</b> kodlarını kopyala.</p>
+                        <a href="https://github.com/erhan3861/maarif_5_mat_1/blob/main/oyun1.html" target="_blank" class="action-link github-link">
+                            🔗 GitHub Linkine Git
+                        </a>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-icon">✨</div>
+                    <div class="step-content">
+                        <h4>2. Editörü Aç & Yapıştır</h4>
+                        <p>Talent14 editörünü aç ve kopyaladığın kodu oraya yapıştır.</p>
+                        <a href="https://app.talent14.com/codeEditor" target="_blank" class="action-link talent-link">
+                            📝 Editörü Aç ve Kodla
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 25px; font-size: 0.85rem; color: #58a6ff;">
+                <i>*Kodları değiştirmekten korkma, hata yapa yapa öğreneceksin!</i> 😉
+            </div>
+        </div>
     </div>
 
     <script>
-        // --- VERİ SETİ (Gerçek Hayat Bağlamları) ---
+        // --- POPUP KONTROL SCRIPTI ---
+        function openCodeModal() {
+            const modal = document.getElementById('codeModal');
+            const card = modal.querySelector('.modal-card');
+            
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 10);
+        }
+
+        function closeCodeModal() {
+            const modal = document.getElementById('codeModal');
+            const card = modal.querySelector('.modal-card');
+            
+            modal.style.opacity = '0';
+            card.style.transform = 'translateY(-50px)';
+            
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        // Dışarı tıklayınca kapatma
+        document.getElementById('codeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCodeModal();
+            }
+        });
+
+        // --- OYUN SCRIPTI ---
         const questions = [
             {
                 source: "TÜİK (Türkiye İstatistik Kurumu) - Nüfus Verisi",
@@ -240,20 +384,16 @@
         let currentIdx = 0;
         let score = 0;
 
-        // Başlangıç
         window.onload = loadQuestion;
 
         function loadQuestion() {
             const data = questions[currentIdx];
-            
-            // Verileri Yerleştir
             document.getElementById('source-txt').innerText = data.source;
             document.getElementById('question-txt').innerText = data.text;
             document.getElementById('feedback-area').style.display = 'none';
 
-            // Seçenekleri Oluştur
             const container = document.getElementById('options-container');
-            container.innerHTML = ''; // Temizle
+            container.innerHTML = ''; 
 
             data.options.forEach((opt, index) => {
                 const btn = document.createElement('button');
@@ -272,7 +412,6 @@
             const fbDetail = document.getElementById('fb-detail');
 
             if (selectedIndex === data.correct) {
-                // DOĞRU
                 score++;
                 document.getElementById('score').innerText = score;
                 fbIcon.innerText = "✅";
@@ -280,13 +419,11 @@
                 fbMsg.style.color = "#2ea043";
                 fbDetail.innerText = data.explanation;
             } else {
-                // YANLIŞ
                 fbIcon.innerText = "⚠️";
                 fbMsg.innerText = "HATA TESPİT EDİLDİ";
                 fbMsg.style.color = "#da3633";
                 fbDetail.innerText = "Yanlış dosya seçildi. Doğru cevap şuydu: " + data.options[data.correct];
             }
-
             feedbackArea.style.display = "flex";
         }
 
@@ -295,12 +432,10 @@
             if (currentIdx < questions.length) {
                 loadQuestion();
             } else {
-                // Oyun Bitti
                 document.getElementById('feedback-area').style.display = 'none';
                 document.getElementById('end-screen').style.display = 'flex';
             }
         }
-
     </script>
 </body>
 </html>

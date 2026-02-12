@@ -19,7 +19,164 @@
             overflow: hidden;
         }
 
-        /* İstasyon Tabelası */
+        /* --- KODLA BUTONU (SAĞ ÜST) --- */
+        .code-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #238636, #2ea043); /* GitHub Yeşili */
+            color: white;
+            border: 1px solid #2ea043;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(46, 160, 67, 0.3);
+            z-index: 50;
+        }
+
+        .code-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(46, 160, 67, 0.5);
+            background: linear-gradient(135deg, #2ea043, #238636);
+        }
+
+        /* --- ANA MENÜ BUTONU (SOL ÜST - İSTASYON TEMASI) --- */
+        .back-btn-station {
+            position: absolute;
+            top: 20px; 
+            left: 20px;
+            text-decoration: none;
+            color: #fff;
+            background: rgba(139, 69, 19, 0.8); /* Ahşap Kahverengi */
+            backdrop-filter: blur(5px);
+            font-size: 0.95rem;
+            border: 2px solid #DEB887;
+            padding: 10px 20px;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .back-btn-station:hover { 
+            background: #A0522D; 
+            border-color: #fff;
+            transform: translateX(3px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.3);
+        }
+
+        /* --- KODLAMA POPUP MODAL --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-card {
+            background: #161b22;
+            width: 90%;
+            max-width: 500px;
+            border: 2px solid #58a6ff;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            transform: translateY(-50px);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 50px rgba(88, 166, 255, 0.2);
+            font-family: 'Segoe UI', sans-serif;
+            color: #c9d1d9;
+        }
+
+        .modal-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #58a6ff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 15px;
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            background: none;
+            border: none;
+            color: #8b949e;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .close-modal-btn:hover { color: #f85149; }
+
+        /* Adım Kartları */
+        .step-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left;
+        }
+
+        .step-item {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s;
+        }
+        
+        .step-item:hover { transform: translateX(5px); border-color: #58a6ff; }
+
+        .step-icon {
+            font-size: 2rem;
+            width: 50px;
+            text-align: center;
+        }
+
+        .step-content h4 { margin: 0 0 5px 0; color: #fff; }
+        .step-content p { margin: 0; font-size: 0.9rem; color: #8b949e; }
+
+        .action-link {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 8px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.85rem;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .action-link:hover { transform: scale(1.05); }
+
+        .github-link { background: #238636; box-shadow: 0 4px 10px rgba(35, 134, 54, 0.3); }
+        .talent-link { background: #8a4bfa; box-shadow: 0 4px 10px rgba(138, 75, 250, 0.3); }
+
+
+        /* --- OYUN STİLLERİ --- */
         .station-sign {
             background: #8B4513;
             color: #fff;
@@ -43,7 +200,6 @@
         .station-sign::before { left: 20px; }
         .station-sign::after { right: 20px; }
 
-        /* --- Raylar --- */
         .tracks {
             position: absolute;
             bottom: 100px;
@@ -57,17 +213,15 @@
             z-index: 0;
         }
 
-        /* --- Tren Gövdesi --- */
         .train-wrapper {
             display: flex;
             align-items: flex-end;
-            margin-bottom: 120px; /* Rayların üstüne */
+            margin-bottom: 120px;
             position: relative;
             z-index: 1;
             transition: transform 2s ease-in;
         }
 
-        /* Lokomotif */
         .locomotive {
             width: 120px;
             height: 100px;
@@ -82,7 +236,7 @@
             font-weight: bold;
             box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
         }
-        .locomotive::before { /* Baca */
+        .locomotive::before {
             content: '';
             position: absolute;
             top: -30px; left: 20px;
@@ -104,135 +258,65 @@
             100% { transform: translateY(-50px) scale(2); opacity: 0; }
         }
 
-        /* Vagonlar ve Rakamlar */
-        .wagon-container {
-            display: flex;
-            align-items: center;
-        }
+        .wagon-container { display: flex; align-items: center; }
 
         .digit-box {
-            width: 50px;
-            height: 70px;
-            background: #f1c40f;
-            border: 3px solid #f39c12;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: bold;
-            color: #333;
-            border-radius: 5px;
-            position: relative;
-            box-shadow: 2px 5px 10px rgba(0,0,0,0.2);
+            width: 50px; height: 70px; background: #f1c40f; border: 3px solid #f39c12;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; font-weight: bold; color: #333; border-radius: 5px;
+            position: relative; box-shadow: 2px 5px 10px rgba(0,0,0,0.2);
         }
 
-        /* Tekerlekler */
         .digit-box::after, .locomotive::after {
-            content: '';
-            position: absolute;
-            bottom: -15px; left: 5px;
-            width: 15px; height: 15px;
-            background: #333;
-            border-radius: 50%;
-            box-shadow: 25px 0 0 #333; /* İkinci tekerlek */
+            content: ''; position: absolute; bottom: -15px; left: 5px;
+            width: 15px; height: 15px; background: #333; border-radius: 50%;
+            box-shadow: 25px 0 0 #333;
         }
 
-        /* Ayırıcı (Nokta Koyma Yeri) */
         .coupler {
-            width: 30px;
-            height: 30px;
-            margin: 0 5px;
-            background: rgba(0,0,0,0.1);
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: transparent;
-            border: 2px dashed #999;
-            transition: all 0.2s;
+            width: 30px; height: 30px; margin: 0 5px; background: rgba(0,0,0,0.1);
+            border-radius: 50%; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; font-size: 1.5rem; color: transparent;
+            border: 2px dashed #999; transition: all 0.2s;
         }
-
-        .coupler:hover {
-            background: rgba(255,255,255,0.5);
-            border-color: #333;
-        }
-
-        .coupler.active {
-            background: #27ae60;
-            color: white;
-            border: 2px solid #2ecc71;
-            content: '.';
-        }
+        .coupler:hover { background: rgba(255,255,255,0.5); border-color: #333; }
+        .coupler.active { background: #27ae60; color: white; border: 2px solid #2ecc71; content: '.'; }
         
-        /* Bölük İsimleri (Başarıda çıkar) */
         .class-label {
-            position: absolute;
-            top: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #34495e;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            opacity: 0;
-            transition: opacity 0.5s;
-            white-space: nowrap;
+            position: absolute; top: -40px; left: 50%; transform: translateX(-50%);
+            background: #34495e; color: white; padding: 5px 10px; border-radius: 5px;
+            font-size: 0.8rem; opacity: 0; transition: opacity 0.5s; white-space: nowrap;
         }
-        
         .visible-label { opacity: 1; }
 
-        /* Butonlar */
         .control-panel {
-            position: absolute;
-            bottom: 20px;
-            text-align: center;
-            width: 100%;
-            background: rgba(255,255,255,0.8);
-            padding: 20px;
+            position: absolute; bottom: 20px; text-align: center; width: 100%;
+            background: rgba(255,255,255,0.8); padding: 20px;
         }
 
         .btn {
-            background: #2980b9;
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 0 5px 0 #1a5276;
-            transition: transform 0.1s;
+            background: #2980b9; color: white; border: none; padding: 15px 40px;
+            font-size: 1.2rem; border-radius: 30px; cursor: pointer;
+            box-shadow: 0 5px 0 #1a5276; transition: transform 0.1s;
         }
-        
         .btn:active { transform: translateY(4px); box-shadow: none; }
 
-        .back-btn {
-            position: absolute;
-            top: 20px; left: 20px;
-            background: #fff;
-            color: #333;
-            padding: 8px 15px;
-            border-radius: 10px;
-            text-decoration: none;
-            border: 1px solid #ccc;
-        }
-
-        /* Mesaj Alanı */
         .message {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #d35400;
-            height: 30px;
-            margin-bottom: 10px;
+            font-size: 1.2rem; font-weight: bold; color: #d35400;
+            height: 30px; margin-bottom: 10px;
         }
 
     </style>
 </head>
 <body>
 
-    <a href="index.html" class="back-btn">⬅ Ana Menü</a>
+    <a href="index.html" class="back-btn-station">
+        <span>🏠</span> Ana Menü
+    </a>
+
+    <button onclick="openCodeModal()" class="code-btn">
+        <span>💻</span> KODLA
+    </button>
 
     <div class="station-sign">
         <h2 style="margin:0;">🚂 BÖLÜK TRENİ İSTASYONU</h2>
@@ -254,19 +338,78 @@
         <button class="btn" onclick="checkTrain()">KONTROL ET ✔</button>
     </div>
 
+    <div class="modal-overlay" id="codeModal">
+        <div class="modal-card">
+            <button class="close-modal-btn" onclick="closeCodeModal()">×</button>
+            <div class="modal-header">🚀 Kodlama Laboratuvarı</div>
+            
+            <p style="color: #bbb; margin-bottom: 25px;">Kendi oyununu yapmak için adımları takip et!</p>
+
+            <div class="step-container">
+                <div class="step-item">
+                    <div class="step-icon">🐙</div>
+                    <div class="step-content">
+                        <h4>1. Kaynak Kodu Al</h4>
+                        <p>GitHub sayfasına git ve <b>oyun4.html</b> kodlarını kopyala.</p>
+                        <a href="https://github.com/erhan3861/maarif_5_mat_1/blob/main/oyun4.html" target="_blank" class="action-link github-link">
+                            🔗 GitHub Linkine Git
+                        </a>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-icon">✨</div>
+                    <div class="step-content">
+                        <h4>2. Editörü Aç & Yapıştır</h4>
+                        <p>Talent14 editörünü aç ve kopyaladığın kodu oraya yapıştır.</p>
+                        <a href="https://app.talent14.com/codeEditor" target="_blank" class="action-link talent-link">
+                            📝 Editörü Aç ve Kodla
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 25px; font-size: 0.85rem; color: #58a6ff;">
+                <i>*Vagonları kodlarla birleştir!</i> 😉
+            </div>
+        </div>
+    </div>
+
     <script>
-        // --- SEVİYELER ---
-        // Sadece sayıyı string olarak veriyoruz.
+        // --- POPUP KONTROL ---
+        function openCodeModal() {
+            const modal = document.getElementById('codeModal');
+            const card = modal.querySelector('.modal-card');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 10);
+        }
+
+        function closeCodeModal() {
+            const modal = document.getElementById('codeModal');
+            const card = modal.querySelector('.modal-card');
+            modal.style.opacity = '0';
+            card.style.transform = 'translateY(-50px)';
+            setTimeout(() => { modal.style.display = 'none'; }, 300);
+        }
+
+        document.getElementById('codeModal').addEventListener('click', function(e) {
+            if (e.target === this) { closeCodeModal(); }
+        });
+
+        // --- OYUN SCRIPTI ---
         const levels = [
-            "1453890",   // 1.453.890 (Milyonlar)
-            "82500",     // 82.500 (Binler)
-            "3005001",   // 3.005.001
-            "123456789", // 123.456.789
-            "9876543210" // 9.876.543.210 (Milyarlar)
+            "1453890",   
+            "82500",     
+            "3005001",   
+            "123456789", 
+            "9876543210" 
         ];
 
         let currentLevel = 0;
-        let trainData = []; // { type: 'digit' | 'coupler', val: '1', active: false }
+        let trainData = [];
 
         window.onload = loadLevel;
 
@@ -282,16 +425,11 @@
             container.innerHTML = '';
             trainData = [];
 
-            // Treni oluştur (Rakam - Bağlayıcı - Rakam...)
             for (let i = 0; i < numStr.length; i++) {
-                // Rakam Vagonu
                 const digitDiv = document.createElement('div');
                 digitDiv.className = 'digit-box';
                 digitDiv.innerText = numStr[i];
                 
-                // Bu vagon hangi bölüğe ait olacak? (Başarıda göstermek için)
-                // Sağdan sola indeks: length - 1 - i
-                // 0-2: Birler, 3-5: Binler, 6-8: Milyonlar...
                 const reversedIndex = numStr.length - 1 - i;
                 let labelText = "";
                 if (reversedIndex === 1) labelText = "BİRLER";
@@ -302,31 +440,28 @@
                 if (labelText) {
                     const label = document.createElement('div');
                     label.className = 'class-label';
-                    label.id = `label-${i}`; // ID ile sonradan bulacağız
+                    label.id = `label-${i}`;
                     label.innerText = labelText;
                     digitDiv.appendChild(label);
                 }
 
                 container.appendChild(digitDiv);
 
-                // Son rakam değilse araya bağlayıcı (coupler) koy
                 if (i < numStr.length - 1) {
                     const coupler = document.createElement('div');
                     coupler.className = 'coupler';
-                    coupler.dataset.index = i; // Hangi aralıkta olduğunu bilmek için
+                    coupler.dataset.index = i;
                     coupler.onclick = function() { toggleCoupler(this); };
                     container.appendChild(coupler);
                 }
             }
             
-            // Treni geri getir (eğer gittiyse)
             document.getElementById('train-area').style.transform = "translateX(0)";
             document.getElementById('msg-box').style.color = "#d35400";
             document.getElementById('msg-box').innerText = "Sayıları ayırmak için aradaki boşluklara tıkla!";
         }
 
         function toggleCoupler(el) {
-            // Noktayı aç/kapa
             if (el.classList.contains('active')) {
                 el.classList.remove('active');
                 el.innerText = "";
@@ -341,25 +476,16 @@
             const couplers = document.querySelectorAll('.coupler');
             let isCorrect = true;
             
-            // Kural: Sağdan sola her 3 basamakta bir nokta olmalı.
-            // String uzunluğu L. Nokta yerleri (indeks olarak): L-3, L-6, L-9...
-            // Coupler'ın dataset.index'i, solundaki rakamın indeksidir.
-            // Örnek: 1453890 (L=7). Noktalar: 0'dan sonra (1.) ve 3'ten sonra (4.)
-            // İstenen coupler indexleri: (7-3)-1 = 3, (7-6)-1 = 0.
-            
             let requiredIndices = [];
             for (let k = 3; k < numStr.length; k += 3) {
                 requiredIndices.push((numStr.length - k) - 1);
             }
 
-            // Kontrol Et
             couplers.forEach(c => {
                 const idx = parseInt(c.dataset.index);
                 const isActive = c.classList.contains('active');
                 
-                // Eğer burada nokta olması gerekiyorsa ve yoksa -> HATA
                 if (requiredIndices.includes(idx) && !isActive) isCorrect = false;
-                // Eğer burada nokta olmaması gerekiyorsa ve varsa -> HATA
                 if (!requiredIndices.includes(idx) && isActive) isCorrect = false;
             });
 
@@ -369,15 +495,11 @@
                 msgBox.innerText = "HARİKA! Tren kalkıyor... Çuf Çuf!";
                 msgBox.style.color = "green";
                 
-                // Etiketleri göster
                 const labels = document.querySelectorAll('.class-label');
                 labels.forEach(l => l.classList.add('visible-label'));
 
-                // Treni hareket ettir
                 setTimeout(() => {
-                    document.getElementById('train-area').style.transform = "translateX(1500px)"; // Ekran dışına
-                    
-                    // Sonraki seviye
+                    document.getElementById('train-area').style.transform = "translateX(1500px)";
                     setTimeout(() => {
                         currentLevel++;
                         loadLevel();
@@ -387,7 +509,6 @@
             } else {
                 msgBox.innerText = "HATA! Vagonlar yanlış bağlandı. Sağdan 3 sayıp nokta koymalısın.";
                 msgBox.style.color = "red";
-                // Titreme efekti
                 const train = document.getElementById('train-area');
                 train.style.transform = "translateX(-10px)";
                 setTimeout(() => train.style.transform = "translateX(10px)", 100);

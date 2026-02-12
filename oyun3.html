@@ -20,7 +20,163 @@
             overflow: hidden;
         }
 
-        /* --- Kristal Küre --- */
+        /* --- KODLA BUTONU (SAĞ ÜST) --- */
+        .code-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #238636, #2ea043); /* GitHub Yeşili - Platform Rengi */
+            color: white;
+            border: 1px solid #2ea043;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(46, 160, 67, 0.3);
+            z-index: 50;
+        }
+
+        .code-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(46, 160, 67, 0.5);
+            background: linear-gradient(135deg, #2ea043, #238636);
+        }
+
+        /* --- ANA MENÜ BUTONU (SOL ÜST - MİSTİK TEMA) --- */
+        .back-btn-mystic {
+            position: absolute;
+            top: 20px; 
+            left: 20px;
+            text-decoration: none;
+            color: #dda0dd; /* Açık Mor */
+            background: rgba(46, 0, 62, 0.6);
+            backdrop-filter: blur(5px);
+            font-size: 0.95rem;
+            border: 1px solid #9932cc;
+            padding: 10px 20px;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+        }
+
+        .back-btn-mystic:hover { 
+            background: rgba(75, 0, 130, 0.8); 
+            color: #fff;
+            box-shadow: 0 0 15px rgba(153, 50, 204, 0.6);
+            transform: translateX(3px);
+        }
+
+        /* --- KODLAMA POPUP MODAL --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-card {
+            background: #1a0525; /* Koyu Mor Arkaplan */
+            width: 90%;
+            max-width: 500px;
+            border: 2px solid #9932cc;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            transform: translateY(-50px);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 50px rgba(153, 50, 204, 0.3);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .modal-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #dda0dd;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #4b0082;
+            padding-bottom: 15px;
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .close-modal-btn:hover { color: #f85149; }
+
+        /* Adım Kartları */
+        .step-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left;
+        }
+
+        .step-item {
+            background: #2e003e;
+            border: 1px solid #4b0082;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s;
+        }
+        
+        .step-item:hover { transform: translateX(5px); border-color: #dda0dd; }
+
+        .step-icon {
+            font-size: 2rem;
+            width: 50px;
+            text-align: center;
+        }
+
+        .step-content h4 { margin: 0 0 5px 0; color: #fff; }
+        .step-content p { margin: 0; font-size: 0.9rem; color: #bbb; }
+
+        .action-link {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 8px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.85rem;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .action-link:hover { transform: scale(1.05); }
+
+        .github-link { background: #238636; box-shadow: 0 4px 10px rgba(35, 134, 54, 0.3); }
+        .talent-link { background: #8a4bfa; box-shadow: 0 4px 10px rgba(138, 75, 250, 0.3); }
+
+
+        /* --- OYUN STİLLERİ --- */
         .crystal-ball-container {
             position: relative;
             width: 300px;
@@ -49,7 +205,6 @@
             50% { transform: translateY(-15px); }
         }
 
-        /* Küre İçindeki Görüntü (Soru) */
         .vision-content {
             position: relative;
             z-index: 1;
@@ -63,11 +218,8 @@
             animation: fadeInVision 2s forwards 0.5s;
         }
 
-        @keyframes fadeInVision {
-            to { opacity: 1; }
-        }
+        @keyframes fadeInVision { to { opacity: 1; } }
 
-        /* Kaide (Stand) */
         .stand {
             position: absolute;
             bottom: -40px;
@@ -79,7 +231,6 @@
             z-index: 0;
         }
 
-        /* --- Soru Alanı --- */
         .question-box {
             background: rgba(40, 10, 60, 0.8);
             padding: 20px;
@@ -117,7 +268,6 @@
             box-shadow: 0 0 15px #9932cc;
         }
 
-        /* --- Geri Bildirim --- */
         .feedback-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -131,17 +281,6 @@
             color: white;
         }
 
-        .back-btn {
-            position: absolute;
-            top: 20px; left: 20px;
-            text-decoration: none;
-            color: #dda0dd;
-            border: 1px solid #dda0dd;
-            padding: 8px 15px;
-            border-radius: 5px;
-        }
-
-        /* Mobil */
         @media (max-width: 600px) {
             .options-grid { grid-template-columns: 1fr; }
             .crystal-ball-container { width: 200px; height: 200px; }
@@ -151,7 +290,13 @@
 </head>
 <body>
 
-    <a href="index.html" class="back-btn">⬅ Ana Menü</a>
+    <a href="index.html" class="back-btn-mystic">
+        <span>🏠</span> Ana Menü
+    </a>
+
+    <button onclick="openCodeModal()" class="code-btn">
+        <span>💻</span> KODLA
+    </button>
 
     <div class="crystal-ball-container">
         <div class="crystal-ball">
@@ -178,41 +323,109 @@
         <button onclick="nextQuestion()" style="margin-top:30px; padding:15px 30px; font-size:1.2rem; background:#9932cc; color:white; border:none; border-radius:10px; cursor:pointer;">Sonraki Kehanet ➡</button>
     </div>
 
+    <div class="modal-overlay" id="codeModal">
+        <div class="modal-card">
+            <button class="close-modal-btn" onclick="closeCodeModal()">×</button>
+            <div class="modal-header">🚀 Kodlama Laboratuvarı</div>
+            
+            <p style="color: #bbb; margin-bottom: 25px;">Sayıların gizemini kodlarla çöz!</p>
+
+            <div class="step-container">
+                <div class="step-item">
+                    <div class="step-icon">🐙</div>
+                    <div class="step-content">
+                        <h4>1. Kaynak Kodu Al</h4>
+                        <p>GitHub sayfasına git ve <b>oyun3.html</b> kodlarını kopyala.</p>
+                        <a href="https://github.com/erhan3861/maarif_5_mat_1/blob/main/oyun3.html" target="_blank" class="action-link github-link">
+                            🔗 GitHub Linkine Git
+                        </a>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-icon">✨</div>
+                    <div class="step-content">
+                        <h4>2. Editörü Aç & Yapıştır</h4>
+                        <p>Talent14 editörünü aç ve kopyaladığın kodu oraya yapıştır.</p>
+                        <a href="https://app.talent14.com/codeEditor" target="_blank" class="action-link talent-link">
+                            📝 Editörü Aç ve Kodla
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 25px; font-size: 0.85rem; color: #58a6ff;">
+                <i>*Tahmin yeteneğini kodlama ile birleştir!</i> 😉
+            </div>
+        </div>
+    </div>
+
     <script>
+        // --- POPUP KONTROL SCRIPTI ---
+        function openCodeModal() {
+            const modal = document.getElementById('codeModal');
+            const card = modal.querySelector('.modal-card');
+            
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 10);
+        }
+
+        function closeCodeModal() {
+            const modal = document.getElementById('codeModal');
+            const card = modal.querySelector('.modal-card');
+            
+            modal.style.opacity = '0';
+            card.style.transform = 'translateY(-50px)';
+            
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        document.getElementById('codeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCodeModal();
+            }
+        });
+
+        // --- OYUN SCRIPTI ---
         const questions = [
             {
                 scenario: "İstanbul'da yaşayan insan sayısı sence kaçtır?",
                 vision: "🏙️ İSTANBUL 🏙️",
                 options: ["16 Bin", "16 Milyon", "16 Milyar"],
-                correct: 1, // 16 Milyon
+                correct: 1, 
                 fact: "Doğru! İstanbul çok kalabalık. 16 Bin bir kasaba olurdu, 16 Milyar ise Dünya nüfusundan bile fazla!"
             },
             {
                 scenario: "Bir futbol stadyumu tamamen dolarsa kaç kişi olur?",
                 vision: "🏟️ STADYUM 🏟️",
                 options: ["50 Bin", "5 Milyon", "500 Kişi"],
-                correct: 0, // 50 Bin
+                correct: 0, 
                 fact: "Harika! Stadyumlar büyüktür ama milyonlar sığmaz. 50.000 (Elli Bin) makul bir tahmin."
             },
             {
                 scenario: "Dünyamızda yaşayan toplam insan sayısı kaçtır?",
                 vision: "🌍 DÜNYA 🌍",
                 options: ["8 Milyon", "8 Milyar", "8 Trilyon"],
-                correct: 1, // 8 Milyar
+                correct: 1, 
                 fact: "Mükemmel Tahmin! 8 Milyar insan var. 8 Trilyon olması imkansız (henüz!)."
             },
             {
                 scenario: "Samanyolu Galaksisindeki yıldız sayısı kaçtır?",
                 vision: "✨ GALAKSİ ✨",
                 options: ["200 Bin", "200 Milyon", "200 Milyar"],
-                correct: 2, // 200 Milyar
+                correct: 2, 
                 fact: "İnanılmaz! Gökyüzünde sayılamayacak kadar çok yıldız var. Milyarlarca!"
             },
             {
                 scenario: "Bir karınca kolonisindeki karınca sayısı?",
                 vision: "🐜 KARINCA YUVASI 🐜",
                 options: ["10 Tane", "500 Bin", "50 Milyar"],
-                correct: 1, // 500 Bin
+                correct: 1, 
                 fact: "Doğru! Büyük bir yuvada yüz binlerce karınca yaşayabilir."
             }
         ];
@@ -259,12 +472,10 @@
                 title.innerText = "🔮 BULUTLU... 🔮";
                 title.style.color = "#ff4444";
                 msg.innerText = "Küre bu cevabı reddediyor. " + data.options[selectedIndex] + " bu durum için mantıksız. Tekrar dene!";
-                // Yanlışta geçme, modalı açıp kapatarak tekrar denetelim
                 document.querySelector('#modal button').onclick = () => modal.style.display = 'none';
                 document.querySelector('#modal button').innerText = "Tekrar Dene";
             }
             
-            // Eğer doğruysa butonu güncelle
             if (selectedIndex === data.correct) {
                  document.querySelector('#modal button').onclick = nextQuestion;
                  document.querySelector('#modal button').innerText = "Sıradaki Kehanet ➡";
@@ -283,7 +494,6 @@
             document.getElementById('options-area').innerHTML = '<a href="index.html" class="guess-btn" style="text-decoration:none; display:block; background:#4b0082;">Ana Menüye Dön</a>';
             document.getElementById('vision-text').innerText = "🏆 USTA KÂHİN";
         }
-
     </script>
 </body>
 </html>

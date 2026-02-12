@@ -27,7 +27,164 @@
             color: #333;
         }
 
-        /* --- Ana Sahne --- */
+        /* --- KODLA BUTONU (SAĞ ÜST) --- */
+        .code-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #238636, #2ea043); /* GitHub Yeşili */
+            color: white;
+            border: 2px solid #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 50;
+        }
+
+        .code-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+            background: linear-gradient(135deg, #2ea043, #238636);
+        }
+
+        /* --- ANA MENÜ BUTONU (SOL ÜST - İNŞAAT TEMASI) --- */
+        .back-btn-cons {
+            position: absolute;
+            top: 20px; 
+            left: 20px;
+            text-decoration: none;
+            color: #f1c40f;
+            background: #2c3e50; /* Koyu Gri */
+            font-size: 0.95rem;
+            border: 2px solid #f1c40f; /* Sarı Çerçeve */
+            padding: 10px 20px;
+            border-radius: 5px; /* Daha köşeli endüstriyel stil */
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+        }
+
+        .back-btn-cons:hover { 
+            background: #34495e; 
+            color: #fff;
+            border-color: #fff;
+            transform: translateX(3px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.5);
+        }
+
+        /* --- KODLAMA POPUP MODAL --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-card {
+            background: #2c3e50; /* Koyu Gri */
+            width: 90%;
+            max-width: 500px;
+            border: 4px solid #f1c40f; /* Sarı Çerçeve */
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            transform: translateY(-50px);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            font-family: 'Segoe UI', sans-serif;
+            color: #ecf0f1;
+        }
+
+        .modal-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f1c40f;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px dashed #7f8c8d;
+            padding-bottom: 15px;
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            background: none;
+            border: none;
+            color: #bdc3c7;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .close-modal-btn:hover { color: #e74c3c; }
+
+        /* Adım Kartları */
+        .step-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left;
+        }
+
+        .step-item {
+            background: #34495e;
+            border: 1px solid #7f8c8d;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s;
+        }
+        
+        .step-item:hover { transform: translateX(5px); border-color: #f1c40f; }
+
+        .step-icon {
+            font-size: 2rem;
+            width: 50px;
+            text-align: center;
+        }
+
+        .step-content h4 { margin: 0 0 5px 0; color: #fff; }
+        .step-content p { margin: 0; font-size: 0.9rem; color: #bdc3c7; }
+
+        .action-link {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 8px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.85rem;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .action-link:hover { transform: scale(1.05); }
+
+        .github-link { background: #238636; box-shadow: 0 4px 10px rgba(35, 134, 54, 0.3); }
+        .talent-link { background: #8a4bfa; box-shadow: 0 4px 10px rgba(138, 75, 250, 0.3); }
+
+
+        /* --- OYUN STİLLERİ --- */
         .site-container {
             position: relative;
             width: 800px;
@@ -42,7 +199,6 @@
             align-items: center;
         }
 
-        /* Vinç Alanı */
         .crane-area {
             width: 100%;
             height: 150px;
@@ -53,147 +209,69 @@
 
         .crane-arm {
             position: absolute;
-            top: 20px;
-            right: 100px;
-            width: 300px;
-            height: 10px;
-            background: #333;
+            top: 20px; right: 100px;
+            width: 300px; height: 10px; background: #333;
         }
 
         .crane-cable {
-            position: absolute;
-            top: 30px;
-            right: 250px;
-            width: 4px;
-            height: 60px;
-            background: #555;
-            transition: height 0.5s;
+            position: absolute; top: 30px; right: 250px;
+            width: 4px; height: 60px; background: #555; transition: height 0.5s;
         }
 
-        /* Vurgulanan Rakam Kutusu */
         .highlighted-digit {
-            position: absolute;
-            bottom: -40px; /* Kablonun ucunda */
-            left: -20px;
-            width: 50px;
-            height: 50px;
-            background: #e74c3c;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            border: 2px solid #c0392b;
+            position: absolute; bottom: -40px; left: -20px;
+            width: 50px; height: 50px; background: #e74c3c; color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; border: 2px solid #c0392b;
             box-shadow: 0 5px 10px rgba(0,0,0,0.3);
             animation: swing 2s infinite ease-in-out;
         }
-
         @keyframes swing {
             0% { transform: rotate(-5deg); }
             50% { transform: rotate(5deg); }
             100% { transform: rotate(-5deg); }
         }
 
-        /* Sayı Göstergesi */
         .number-display {
-            font-size: 3rem;
-            margin-top: 20px;
-            letter-spacing: 5px;
-            background: #333;
-            color: #fff;
-            padding: 10px 30px;
-            border-radius: 10px;
+            font-size: 3rem; margin-top: 20px; letter-spacing: 5px;
+            background: #333; color: #fff; padding: 10px 30px; border-radius: 10px;
         }
         
-        .digit-span {
-            display: inline-block;
-            transition: color 0.3s;
-        }
-        .active-digit {
-            color: #e74c3c;
-            transform: scale(1.2);
-        }
+        .digit-span { display: inline-block; transition: color 0.3s; }
+        .active-digit { color: #e74c3c; transform: scale(1.2); }
 
-        /* Seçenek Blokları (Beton) */
-        .blocks-area {
-            display: flex;
-            gap: 20px;
-            margin-top: 50px;
-            z-index: 2;
-        }
+        .blocks-area { display: flex; gap: 20px; margin-top: 50px; z-index: 2; }
 
         .concrete-block {
-            width: 120px;
-            height: 80px;
-            background: #95a5a6; /* Beton Grisi */
-            border: 4px solid #7f8c8d;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: #2c3e50;
-            cursor: pointer;
-            box-shadow: 0 5px 0 #7f8c8d;
-            transition: all 0.2s;
+            width: 120px; height: 80px; background: #95a5a6;
+            border: 4px solid #7f8c8d; display: flex; align-items: center;
+            justify-content: center; font-size: 1.5rem; color: #2c3e50;
+            cursor: pointer; box-shadow: 0 5px 0 #7f8c8d; transition: all 0.2s;
             position: relative;
         }
+        .concrete-block:active { transform: translateY(4px); box-shadow: none; }
+        .concrete-block:hover { background: #bdc3c7; }
 
-        .concrete-block:active {
-            transform: translateY(4px);
-            box-shadow: none;
-        }
-
-        .concrete-block:hover {
-            background: #bdc3c7;
-        }
-
-        /* İnşaat Kulesi (Doğru cevaplar buraya) */
-        .tower-base {
-            position: absolute;
-            bottom: 0;
-            left: 50px;
-            width: 100px;
-            height: 20px;
-            background: #333;
-        }
-
-        /* Geri Bildirim */
         .feedback-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            color: white;
-            text-align: center;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); display: none; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 10;
+            color: white; text-align: center;
         }
 
-        .back-btn {
-            position: absolute;
-            top: 20px; left: 20px;
-            background: #333;
-            color: #f1c40f;
-            padding: 10px 20px;
-            text-decoration: none;
-            font-weight: bold;
-            border: 2px solid #f1c40f;
-        }
-
-        /* Soru Metni */
-        .question-text {
-            font-size: 1.2rem;
-            margin: 10px 0;
-            color: #555;
-        }
+        .question-text { font-size: 1.2rem; margin: 10px 0; color: #555; }
 
     </style>
 </head>
 <body>
 
-    <a href="index.html" class="back-btn">⬅ Ana Menü</a>
+    <a href="index.html" class="back-btn-cons">
+        <span>🏠</span> Ana Menü
+    </a>
+
+    <button onclick="openCodeModal()" class="code-btn">
+        <span>💻</span> KODLA
+    </button>
 
     <div class="site-container">
         <div class="crane-area">
@@ -204,37 +282,89 @@
             <div style="position:absolute; bottom:10px; right:10px; font-size:0.8rem; color:#fff;">VİNÇ OPERATÖRÜ</div>
         </div>
 
-        <div class="number-display" id="full-number">
-            </div>
+        <div class="number-display" id="full-number"></div>
 
         <div class="question-text">
             Yukarıdaki kırmızı rakamın <u>BASAMAK DEĞERİ</u> kaçtır?
         </div>
 
-        <div class="blocks-area" id="options-container">
-            </div>
+        <div class="blocks-area" id="options-container"></div>
 
         <div class="feedback-overlay" id="feedback">
             <h1 id="fb-title">DOĞRU!</h1>
             <p id="fb-msg" style="font-size:1.2rem;">Kule yükseliyor...</p>
             <button onclick="nextLevel()" style="padding:15px 30px; font-size:1.2rem; background:#2ecc71; border:none; color:white; cursor:pointer;">Sonraki Kat 🏗️</button>
         </div>
+    </div>
 
+    <div class="modal-overlay" id="codeModal">
+        <div class="modal-card">
+            <button class="close-modal-btn" onclick="closeCodeModal()">×</button>
+            <div class="modal-header">🚀 Kodlama Laboratuvarı</div>
+            
+            <p style="color: #bdc3c7; margin-bottom: 25px;">Kendi oyununu inşa etmek için adımları takip et!</p>
+
+            <div class="step-container">
+                <div class="step-item">
+                    <div class="step-icon">🐙</div>
+                    <div class="step-content">
+                        <h4>1. Kaynak Kodu Al</h4>
+                        <p>GitHub sayfasına git ve <b>oyun5.html</b> kodlarını kopyala.</p>
+                        <a href="https://github.com/erhan3861/maarif_5_mat_1/blob/main/oyun5.html" target="_blank" class="action-link github-link">
+                            🔗 GitHub Linkine Git
+                        </a>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-icon">✨</div>
+                    <div class="step-content">
+                        <h4>2. Editörü Aç & Yapıştır</h4>
+                        <p>Talent14 editörünü aç ve kopyaladığın kodu oraya yapıştır.</p>
+                        <a href="https://app.talent14.com/codeEditor" target="_blank" class="action-link talent-link">
+                            📝 Editörü Aç ve Kodla
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 25px; font-size: 0.85rem; color: #f1c40f;">
+                <i>*Kodlarla sayıları inşa etmeye hazır mısın?</i> 😉
+            </div>
+        </div>
     </div>
 
     <script>
-        // --- SORU HAVUZU ---
-        // number: Tam sayı
-        // targetIndex: Hangi basamağı soruyoruz? (0: Birler, 1: Onlar...)
-        // correctValue: Basamak değeri
+        // --- POPUP KONTROL ---
+        function openCodeModal() {
+            const modal = document.getElementById('codeModal');
+            const card = modal.querySelector('.modal-card');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 10);
+        }
+
+        function closeCodeModal() {
+            const modal = document.getElementById('codeModal');
+            const card = modal.querySelector('.modal-card');
+            modal.style.opacity = '0';
+            card.style.transform = 'translateY(-50px)';
+            setTimeout(() => { modal.style.display = 'none'; }, 300);
+        }
+
+        document.getElementById('codeModal').addEventListener('click', function(e) {
+            if (e.target === this) { closeCodeModal(); }
+        });
+
+        // --- OYUN SCRIPTI ---
         const questions = [
             { 
                 numStr: "5.432", 
                 rawNum: 5432, 
                 targetDigit: '5', 
-                targetIndex: 3, // 1000'ler basamağı (0'dan başlayarak sağdan sola: 2->0, 3->1, 4->2, 5->3)
-                // Düzeltme: String içinde soldan sağa index bulmak daha kolay görselleştirme için.
-                // 5.432 -> "5" en başta.
+                targetIndex: 3,
                 visualIndex: 0, 
                 correctVal: 5000 
             },
@@ -242,14 +372,14 @@
                 numStr: "80.216", 
                 rawNum: 80216, 
                 targetDigit: '8', 
-                visualIndex: 0, // En baş
+                visualIndex: 0,
                 correctVal: 80000 
             },
             { 
                 numStr: "145.099", 
                 rawNum: 145099, 
                 targetDigit: '4', 
-                visualIndex: 1, // "1" den sonra "4"
+                visualIndex: 1, 
                 correctVal: 40000 
             },
             { 
@@ -263,7 +393,7 @@
                 numStr: "987.654", 
                 rawNum: 987654, 
                 targetDigit: '7', 
-                visualIndex: 2, // 9-8-7
+                visualIndex: 2, 
                 correctVal: 7000 
             }
         ];
@@ -280,34 +410,18 @@
 
             const data = questions[currentIdx];
             const numContainer = document.getElementById('full-number');
-            numContainer.innerHTML = ''; // Temizle
+            numContainer.innerHTML = ''; 
             
-            // Sayıyı rakam rakam ekle ve hedefi boya
-            // numStr içindeki noktaları saymadan index bulmak lazım.
-            // Basitlik için numStr'yi direkt basıyoruz, ama hedefi bulurken dikkat ediyoruz.
-            
-            // Verilen stringi parçala (örn: "5.432")
             const chars = data.numStr.split('');
-            let digitCounter = 0; // Noktaları atlayıp sadece rakam sayar
 
             chars.forEach((char, index) => {
                 const span = document.createElement('span');
                 span.innerText = char;
                 span.className = 'digit-span';
                 
-                // Eğer bu karakter bir rakamsa (nokta değilse)
                 if (char !== '.') {
-                    // Şu anki rakam bizim hedef rakamımız mı?
-                    // targetDigit ve o anki sırası eşleşmeli.
-                    // (Basitlik için sadece ilk eşleşen targetDigit'i boyayalım ya da visualIndex kullanalım)
-                    // VisualIndex mantığı: numStr içindeki konumu (noktalar dahil).
-                    
-                    // Daha basit yöntem: Sadece hedef karakteri kırmızı yap.
-                    // Ancak sayı içinde iki tane 5 varsa karışır.
-                    // O yüzden visualIndex en iyisi.
                     if (index === data.visualIndex) {
                         span.classList.add('active-digit');
-                        // Vinçteki rakamı güncelle
                         document.getElementById('crane-digit').innerText = char;
                     }
                 }
@@ -315,8 +429,6 @@
             });
 
             document.getElementById('feedback').style.display = 'none';
-
-            // Seçenekleri Hazırla
             generateOptions(data.correctVal, data.targetDigit);
         }
 
@@ -324,26 +436,17 @@
             const container = document.getElementById('options-container');
             container.innerHTML = '';
             
-            // Çeldiriciler oluştur:
-            // 1. Sayı değeri (Sadece rakamın kendisi, örn: 5)
-            // 2. Yanlış basamak (örn: 500 yerine 50)
-            // 3. Çok yanlış basamak (örn: 50000)
-            
             let options = [correctVal];
-            options.push(parseInt(digitChar)); // Sadece sayı değeri
+            options.push(parseInt(digitChar)); 
             options.push(correctVal * 10);
             options.push(correctVal / 10 > 1 ? correctVal / 10 : correctVal * 100);
 
-            // Karıştır
             options = options.sort(() => Math.random() - 0.5);
-
-            // Benzersiz yap (Set kullanarak)
             options = [...new Set(options)];
 
             options.forEach(val => {
                 const btn = document.createElement('div');
                 btn.className = 'concrete-block';
-                // Sayıyı noktalı formata çevir (okunabilirlik için)
                 btn.innerText = val.toLocaleString('tr-TR');
                 btn.onclick = () => checkAnswer(val);
                 container.appendChild(btn);
@@ -365,7 +468,6 @@
                 title.style.color = "#e74c3c";
                 msg.innerText = "Yanlış blok! O seçtiğin değer değil. Tekrar bak.";
                 
-                // Butonu tekrar deneye çevir
                 const btn = document.querySelector('#feedback button');
                 btn.innerText = "Tekrar Dene";
                 btn.onclick = () => { feedback.style.display = 'none'; };
@@ -373,7 +475,6 @@
             }
             feedback.style.display = 'flex';
             
-            // Eğer doğruysa butonu güncelle
              if (selectedVal === data.correctVal) {
                 const btn = document.querySelector('#feedback button');
                 btn.innerText = "Sonraki Kat 🏗️";
@@ -406,7 +507,6 @@
             btn.innerText = "Ana Menüye Dön";
             btn.onclick = () => window.location.href = 'index.html';
         }
-
     </script>
 </body>
 </html>
