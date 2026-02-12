@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sayıların Gizemli Dünyası - Matematik 5</title>
+    <style>
+        /* Genel Sayfa Ayarları */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); /* Matematik Mavisi */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        /* Başlık Alanı */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 3rem;
+            color: #00d2ff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            color: #e0e0e0;
+        }
+
+        /* Oyun Butonları Izgarası */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            width: 90%;
+            max-width: 1100px;
+        }
+
+        /* Kart Tasarımı */
+        .game-card {
+            background: white;
+            color: #333;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 5px solid transparent;
+        }
+
+        /* Hover Efektleri */
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+        }
+
+        /* Renk Kodlaması (Her modül farklı renk) */
+        .card-1 { border-bottom-color: #ff6b6b; } /* Kırmızı */
+        .card-2 { border-bottom-color: #feca57; } /* Sarı */
+        .card-3 { border-bottom-color: #48dbfb; } /* Mavi */
+        .card-4 { border-bottom-color: #ff9ff3; } /* Pembe */
+        .card-5 { border-bottom-color: #54a0ff; } /* Koyu Mavi */
+        .card-6 { border-bottom-color: #1dd1a1; } /* Yeşil */
+
+        .card-1:hover .icon { color: #ff6b6b; }
+        .card-2:hover .icon { color: #feca57; }
+        .card-3:hover .icon { color: #48dbfb; }
+        .card-4:hover .icon { color: #ff9ff3; }
+        .card-5:hover .icon { color: #54a0ff; }
+        .card-6:hover .icon { color: #1dd1a1; }
+
+        .icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            transition: color 0.3s;
+        }
+
+        .title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .desc {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* Mobil Uyumluluk */
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            h1 { font-size: 2rem; }
+        }
+
+        @media (max-width: 500px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🔢 Sayıların Gizemli Dünyası</h1>
+        <p>Milyonlar, Milyarlar ve Ötesi! Büyük sayıları keşfetmeye hazır mısın?</p>
+    </header>
+
+    <div class="grid-container">
+        <a href="oyun1.html" class="game-card card-1">
+            <div class="icon">🌍</div>
+            <div class="title">Veri Dedektifi</div>
+            <div class="desc">Gerçek dünya verileriyle sayıların peşine düş!</div>
+        </a>
+
+        <a href="oyun2.html" class="game-card card-2">
+            <div class="icon">🧮</div>
+            <div class="title">Hesap Ustası</div>
+            <div class="desc">Hesap makineni hazırla, sayıları oluştur.</div>
+        </a>
+
+        <a href="oyun3.html" class="game-card card-3">
+            <div class="icon">🔮</div>
+            <div class="title">Sayı Kâhini</div>
+            <div class="desc">Sayıların büyüklüğünü tahmin edebilir misin?</div>
+        </a>
+
+        <a href="oyun4.html" class="game-card card-4">
+            <div class="icon">🚂</div>
+            <div class="title">Bölük Treni</div>
+            <div class="desc">Vagonları birleştir, şifreyi çöz!</div>
+        </a>
+
+        <a href="oyun5.html" class="game-card card-5">
+            <div class="icon">🏗️</div>
+            <div class="title">Sayı İnşaatı</div>
+            <div class="desc">Basamak kulelerini doğru inşa et.</div>
+        </a>
+
+        <a href="oyun6.html" class="game-card card-6">
+            <div class="icon">⚖️</div>
+            <div class="title">Devler Ligi</div>
+            <div class="desc">Hangi sayı daha güçlü? Karşılaştırma zamanı!</div>
+        </a>
+    </div>
+
+</body>
+</html>

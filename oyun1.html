@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veri Dedektifi - Görev 1</title>
+    <style>
+        /* --- Tasarım Dili: Siber / Veri Analizi --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d1117;
+            background-image: 
+                linear-gradient(rgba(13, 17, 23, 0.9), rgba(13, 17, 23, 0.9)),
+                url('https://www.transparenttextures.com/patterns/cubes.png');
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #c9d1d9;
+        }
+
+        /* --- Oyun Çerçevesi --- */
+        .game-terminal {
+            width: 90%;
+            max-width: 800px;
+            background: #161b22;
+            border: 2px solid #30363d;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 255, 127, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Başlık Kısmı */
+        .header-bar {
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title {
+            color: #2ea043; /* Terminal Yeşili */
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .score-board {
+            background: #21262d;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #58a6ff;
+        }
+
+        /* --- Soru Kartı (Dosya) --- */
+        .case-file {
+            background: #21262d;
+            border-left: 5px solid #1f6feb;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .case-source {
+            font-size: 0.9rem;
+            color: #8b949e;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .case-question {
+            font-size: 1.4rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* --- Seçenekler --- */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Mobilde tek sütun */
+            gap: 15px;
+        }
+
+        @media(min-width: 600px) {
+            .options-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        .option-btn {
+            background: #30363d;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+            padding: 20px;
+            font-size: 1.8rem;
+            font-family: 'Courier New', monospace; /* Sayılar için monospace */
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .option-btn:hover {
+            background: #58a6ff;
+            color: #0d1117;
+            transform: scale(1.02);
+        }
+
+        /* --- Geri Bildirim --- */
+        .feedback-modal {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(13, 17, 23, 0.95);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .fb-icon { font-size: 4rem; margin-bottom: 20px; }
+        .fb-text { font-size: 1.5rem; margin-bottom: 20px; color: white; }
+        .fb-sub { font-size: 1rem; color: #8b949e; margin-bottom: 30px; max-width: 80%; }
+
+        .next-btn {
+            background: #2ea043;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px; left: 20px;
+            text-decoration: none;
+            color: #8b949e;
+            font-size: 0.9rem;
+            border: 1px solid #30363d;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+        .back-btn:hover { background: #30363d; color: white; }
+
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-btn">⬅ Ana Menü</a>
+
+    <div class="game-terminal">
+        <div class="header-bar">
+            <div class="title">VERİ DEDEKTİFİ v1.0</div>
+            <div class="score-board">DOĞRU: <span id="score">0</span></div>
+        </div>
+
+        <div id="game-area">
+            <div class="case-file">
+                <div class="case-source">📁 VERİ KAYNAĞI: <span id="source-txt">TÜİK 2023 RAPORU</span></div>
+                <div class="case-question" id="question-txt">Soru yükleniyor...</div>
+            </div>
+
+            <div class="options-grid" id="options-container">
+                </div>
+        </div>
+
+        <div class="feedback-modal" id="feedback-area">
+            <div class="fb-icon" id="fb-icon">✅</div>
+            <div class="fb-text" id="fb-msg">Tebrikler!</div>
+            <div class="fb-sub" id="fb-detail">Açıklama...</div>
+            <button class="next-btn" onclick="nextQuestion()">Sonraki Dosya ➡</button>
+        </div>
+
+        <div class="feedback-modal" id="end-screen">
+            <div class="fb-icon">🏆</div>
+            <div class="fb-text">ANALİZ TAMAMLANDI</div>
+            <div class="fb-sub">Gerçek dünya verilerini başarıyla analiz ettin.</div>
+            <a href="index.html" class="next-btn" style="text-decoration:none;">Ana Menüye Dön</a>
+        </div>
+
+    </div>
+
+    <script>
+        // --- VERİ SETİ (Gerçek Hayat Bağlamları) ---
+        const questions = [
+            {
+                source: "TÜİK (Türkiye İstatistik Kurumu) - Nüfus Verisi",
+                text: "Türkiye'nin nüfusu yaklaşık 85 milyondur. Bu sayının rakamla yazılışı hangisidir?",
+                options: ["85.372.377", "8.537.237", "853.723", "853.723.770"],
+                correct: 0,
+                explanation: "Doğru! 85 Milyon, 8 basamaklı bir sayıdır. (Milyonlar Bölüğü: 85)"
+            },
+            {
+                source: "FEN BİLİMLERİ - Uzay Araştırmaları",
+                text: "Dünya'nın Güneş'e olan uzaklığı yaklaşık 149 milyon kilometredir. Hangisi bu mesafeyi gösterir?",
+                options: ["149.600", "1.496.000", "149.600.000", "14.960.000"],
+                correct: 2,
+                explanation: "Harika! 149 Milyon, 9 basamaklı bir sayıdır. (Milyonlar Bölüğü: 149)"
+            },
+            {
+                source: "SOSYAL BİLGİLER - Dünya Nüfusu",
+                text: "Dünya'da yaklaşık 8 milyar insan yaşamaktadır. 8 milyar sayısı hangisidir?",
+                options: ["8.000.000", "8.000.000.000", "800.000.000", "80.000.000"],
+                correct: 1,
+                explanation: "Süper! Milyarlar bölüğünde '8' vardır ve toplam 10 basamaklıdır."
+            },
+            {
+                source: "EKONOMİ - Devlet Bütçesi",
+                text: "Bir ülkenin bütçesi 'İki Trilyon Beş Yüz Milyar' TL'dir. Bu sayı nasıl yazılır?",
+                options: ["2.500.000.000", "2.500.000.000.000", "25.000.000.000", "250.000.000"],
+                correct: 1,
+                explanation: "Mükemmel! Trilyonlar 13. basamaktan başlar. Çok büyük bir sayı!"
+            },
+            {
+                source: "COĞRAFYA - Yüzölçümü",
+                text: "Türkiye'nin yüzölçümü yaklaşık 'Yedi yüz seksen üç bin' kilometrekaredir.",
+                options: ["783.562", "7.835.620", "78.356", "783"],
+                correct: 0,
+                explanation: "Doğru! Bu sayı binler bölüğündedir, milyonlara ulaşmamıştır."
+            }
+        ];
+
+        let currentIdx = 0;
+        let score = 0;
+
+        // Başlangıç
+        window.onload = loadQuestion;
+
+        function loadQuestion() {
+            const data = questions[currentIdx];
+            
+            // Verileri Yerleştir
+            document.getElementById('source-txt').innerText = data.source;
+            document.getElementById('question-txt').innerText = data.text;
+            document.getElementById('feedback-area').style.display = 'none';
+
+            // Seçenekleri Oluştur
+            const container = document.getElementById('options-container');
+            container.innerHTML = ''; // Temizle
+
+            data.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(index);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex) {
+            const data = questions[currentIdx];
+            const feedbackArea = document.getElementById('feedback-area');
+            const fbIcon = document.getElementById('fb-icon');
+            const fbMsg = document.getElementById('fb-msg');
+            const fbDetail = document.getElementById('fb-detail');
+
+            if (selectedIndex === data.correct) {
+                // DOĞRU
+                score++;
+                document.getElementById('score').innerText = score;
+                fbIcon.innerText = "✅";
+                fbMsg.innerText = "DOĞRU ANALİZ!";
+                fbMsg.style.color = "#2ea043";
+                fbDetail.innerText = data.explanation;
+            } else {
+                // YANLIŞ
+                fbIcon.innerText = "⚠️";
+                fbMsg.innerText = "HATA TESPİT EDİLDİ";
+                fbMsg.style.color = "#da3633";
+                fbDetail.innerText = "Yanlış dosya seçildi. Doğru cevap şuydu: " + data.options[data.correct];
+            }
+
+            feedbackArea.style.display = "flex";
+        }
+
+        function nextQuestion() {
+            currentIdx++;
+            if (currentIdx < questions.length) {
+                loadQuestion();
+            } else {
+                // Oyun Bitti
+                document.getElementById('feedback-area').style.display = 'none';
+                document.getElementById('end-screen').style.display = 'flex';
+            }
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bölük Treni - Görev 4</title>
+    <style>
+        /* --- Tasarım Dili: Tren İstasyonu / Raylar --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #87CEEB 0%, #E0F7FA 100%); /* Gökyüzü */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* İstasyon Tabelası */
+        .station-sign {
+            background: #8B4513;
+            color: #fff;
+            padding: 10px 40px;
+            border-radius: 10px;
+            border: 4px solid #DEB887;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .station-sign::after, .station-sign::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            width: 5px;
+            height: 20px;
+            background: #333;
+        }
+        .station-sign::before { left: 20px; }
+        .station-sign::after { right: 20px; }
+
+        /* --- Raylar --- */
+        .tracks {
+            position: absolute;
+            bottom: 100px;
+            width: 100%;
+            height: 20px;
+            background: repeating-linear-gradient(90deg, #5D4037 0px, #5D4037 20px, transparent 20px, transparent 40px),
+                        linear-gradient(#7f8c8d, #7f8c8d);
+            background-size: 100% 20px, 100% 5px;
+            background-position: 0 0, 0 8px;
+            background-repeat: repeat-x, no-repeat;
+            z-index: 0;
+        }
+
+        /* --- Tren Gövdesi --- */
+        .train-wrapper {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 120px; /* Rayların üstüne */
+            position: relative;
+            z-index: 1;
+            transition: transform 2s ease-in;
+        }
+
+        /* Lokomotif */
+        .locomotive {
+            width: 120px;
+            height: 100px;
+            background: #e74c3c;
+            border-radius: 10px 20px 0 0;
+            position: relative;
+            margin-right: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+        }
+        .locomotive::before { /* Baca */
+            content: '';
+            position: absolute;
+            top: -30px; left: 20px;
+            width: 20px; height: 30px;
+            background: #c0392b;
+        }
+        .smoke {
+            position: absolute;
+            top: -40px; left: 20px;
+            width: 20px; height: 20px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            animation: smokeAnim 2s infinite;
+            opacity: 0;
+        }
+
+        @keyframes smokeAnim {
+            0% { transform: translateY(0) scale(1); opacity: 0.8; }
+            100% { transform: translateY(-50px) scale(2); opacity: 0; }
+        }
+
+        /* Vagonlar ve Rakamlar */
+        .wagon-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .digit-box {
+            width: 50px;
+            height: 70px;
+            background: #f1c40f;
+            border: 3px solid #f39c12;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            border-radius: 5px;
+            position: relative;
+            box-shadow: 2px 5px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Tekerlekler */
+        .digit-box::after, .locomotive::after {
+            content: '';
+            position: absolute;
+            bottom: -15px; left: 5px;
+            width: 15px; height: 15px;
+            background: #333;
+            border-radius: 50%;
+            box-shadow: 25px 0 0 #333; /* İkinci tekerlek */
+        }
+
+        /* Ayırıcı (Nokta Koyma Yeri) */
+        .coupler {
+            width: 30px;
+            height: 30px;
+            margin: 0 5px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: transparent;
+            border: 2px dashed #999;
+            transition: all 0.2s;
+        }
+
+        .coupler:hover {
+            background: rgba(255,255,255,0.5);
+            border-color: #333;
+        }
+
+        .coupler.active {
+            background: #27ae60;
+            color: white;
+            border: 2px solid #2ecc71;
+            content: '.';
+        }
+        
+        /* Bölük İsimleri (Başarıda çıkar) */
+        .class-label {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #34495e;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.5s;
+            white-space: nowrap;
+        }
+        
+        .visible-label { opacity: 1; }
+
+        /* Butonlar */
+        .control-panel {
+            position: absolute;
+            bottom: 20px;
+            text-align: center;
+            width: 100%;
+            background: rgba(255,255,255,0.8);
+            padding: 20px;
+        }
+
+        .btn {
+            background: #2980b9;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #1a5276;
+            transition: transform 0.1s;
+        }
+        
+        .btn:active { transform: translateY(4px); box-shadow: none; }
+
+        .back-btn {
+            position: absolute;
+            top: 20px; left: 20px;
+            background: #fff;
+            color: #333;
+            padding: 8px 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            border: 1px solid #ccc;
+        }
+
+        /* Mesaj Alanı */
+        .message {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #d35400;
+            height: 30px;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-btn">⬅ Ana Menü</a>
+
+    <div class="station-sign">
+        <h2 style="margin:0;">🚂 BÖLÜK TRENİ İSTASYONU</h2>
+        <p style="margin:5px 0 0 0; font-size:0.9rem;">Kural: Sağdan sola 3'er say!</p>
+    </div>
+
+    <div class="train-wrapper" id="train-area">
+        <div class="locomotive">
+            <div class="smoke"></div>
+            KAPTAN
+        </div>
+        <div id="wagons-container" class="wagon-container"></div>
+    </div>
+
+    <div class="tracks"></div>
+
+    <div class="control-panel">
+        <div class="message" id="msg-box">Sayıları ayırmak için aradaki boşluklara tıkla!</div>
+        <button class="btn" onclick="checkTrain()">KONTROL ET ✔</button>
+    </div>
+
+    <script>
+        // --- SEVİYELER ---
+        // Sadece sayıyı string olarak veriyoruz.
+        const levels = [
+            "1453890",   // 1.453.890 (Milyonlar)
+            "82500",     // 82.500 (Binler)
+            "3005001",   // 3.005.001
+            "123456789", // 123.456.789
+            "9876543210" // 9.876.543.210 (Milyarlar)
+        ];
+
+        let currentLevel = 0;
+        let trainData = []; // { type: 'digit' | 'coupler', val: '1', active: false }
+
+        window.onload = loadLevel;
+
+        function loadLevel() {
+            if (currentLevel >= levels.length) {
+                document.getElementById('msg-box').innerText = "TÜM TRENLER YOLA ÇIKTI! TEBRİKLER!";
+                document.getElementById('train-area').style.display = 'none';
+                return;
+            }
+
+            const numStr = levels[currentLevel];
+            const container = document.getElementById('wagons-container');
+            container.innerHTML = '';
+            trainData = [];
+
+            // Treni oluştur (Rakam - Bağlayıcı - Rakam...)
+            for (let i = 0; i < numStr.length; i++) {
+                // Rakam Vagonu
+                const digitDiv = document.createElement('div');
+                digitDiv.className = 'digit-box';
+                digitDiv.innerText = numStr[i];
+                
+                // Bu vagon hangi bölüğe ait olacak? (Başarıda göstermek için)
+                // Sağdan sola indeks: length - 1 - i
+                // 0-2: Birler, 3-5: Binler, 6-8: Milyonlar...
+                const reversedIndex = numStr.length - 1 - i;
+                let labelText = "";
+                if (reversedIndex === 1) labelText = "BİRLER";
+                if (reversedIndex === 4) labelText = "BİNLER";
+                if (reversedIndex === 7) labelText = "MİLYONLAR";
+                if (reversedIndex === 10) labelText = "MİLYARLAR";
+
+                if (labelText) {
+                    const label = document.createElement('div');
+                    label.className = 'class-label';
+                    label.id = `label-${i}`; // ID ile sonradan bulacağız
+                    label.innerText = labelText;
+                    digitDiv.appendChild(label);
+                }
+
+                container.appendChild(digitDiv);
+
+                // Son rakam değilse araya bağlayıcı (coupler) koy
+                if (i < numStr.length - 1) {
+                    const coupler = document.createElement('div');
+                    coupler.className = 'coupler';
+                    coupler.dataset.index = i; // Hangi aralıkta olduğunu bilmek için
+                    coupler.onclick = function() { toggleCoupler(this); };
+                    container.appendChild(coupler);
+                }
+            }
+            
+            // Treni geri getir (eğer gittiyse)
+            document.getElementById('train-area').style.transform = "translateX(0)";
+            document.getElementById('msg-box').style.color = "#d35400";
+            document.getElementById('msg-box').innerText = "Sayıları ayırmak için aradaki boşluklara tıkla!";
+        }
+
+        function toggleCoupler(el) {
+            // Noktayı aç/kapa
+            if (el.classList.contains('active')) {
+                el.classList.remove('active');
+                el.innerText = "";
+            } else {
+                el.classList.add('active');
+                el.innerText = ".";
+            }
+        }
+
+        function checkTrain() {
+            const numStr = levels[currentLevel];
+            const couplers = document.querySelectorAll('.coupler');
+            let isCorrect = true;
+            
+            // Kural: Sağdan sola her 3 basamakta bir nokta olmalı.
+            // String uzunluğu L. Nokta yerleri (indeks olarak): L-3, L-6, L-9...
+            // Coupler'ın dataset.index'i, solundaki rakamın indeksidir.
+            // Örnek: 1453890 (L=7). Noktalar: 0'dan sonra (1.) ve 3'ten sonra (4.)
+            // İstenen coupler indexleri: (7-3)-1 = 3, (7-6)-1 = 0.
+            
+            let requiredIndices = [];
+            for (let k = 3; k < numStr.length; k += 3) {
+                requiredIndices.push((numStr.length - k) - 1);
+            }
+
+            // Kontrol Et
+            couplers.forEach(c => {
+                const idx = parseInt(c.dataset.index);
+                const isActive = c.classList.contains('active');
+                
+                // Eğer burada nokta olması gerekiyorsa ve yoksa -> HATA
+                if (requiredIndices.includes(idx) && !isActive) isCorrect = false;
+                // Eğer burada nokta olmaması gerekiyorsa ve varsa -> HATA
+                if (!requiredIndices.includes(idx) && isActive) isCorrect = false;
+            });
+
+            const msgBox = document.getElementById('msg-box');
+
+            if (isCorrect) {
+                msgBox.innerText = "HARİKA! Tren kalkıyor... Çuf Çuf!";
+                msgBox.style.color = "green";
+                
+                // Etiketleri göster
+                const labels = document.querySelectorAll('.class-label');
+                labels.forEach(l => l.classList.add('visible-label'));
+
+                // Treni hareket ettir
+                setTimeout(() => {
+                    document.getElementById('train-area').style.transform = "translateX(1500px)"; // Ekran dışına
+                    
+                    // Sonraki seviye
+                    setTimeout(() => {
+                        currentLevel++;
+                        loadLevel();
+                    }, 2000);
+                }, 1500);
+
+            } else {
+                msgBox.innerText = "HATA! Vagonlar yanlış bağlandı. Sağdan 3 sayıp nokta koymalısın.";
+                msgBox.style.color = "red";
+                // Titreme efekti
+                const train = document.getElementById('train-area');
+                train.style.transform = "translateX(-10px)";
+                setTimeout(() => train.style.transform = "translateX(10px)", 100);
+                setTimeout(() => train.style.transform = "translateX(0)", 200);
+            }
+        }
+    </script>
+</body>
+</html>

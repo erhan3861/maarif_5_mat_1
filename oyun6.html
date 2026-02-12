@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devler Ligi - Görev 6</title>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+    <style>
+        /* --- Tasarım Dili: Spor Arenası / Rekabet --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: radial-gradient(circle, #2c3e50, #000000);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* --- Arena Işıkları (Efekt) --- */
+        .spotlight {
+            position: absolute;
+            top: -100px;
+            width: 200px;
+            height: 600px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+            transform: rotate(30deg);
+            animation: moveLight 4s infinite alternate;
+            z-index: 0;
+        }
+        .spotlight:nth-child(2) {
+            left: auto; right: 20%;
+            transform: rotate(-30deg);
+            animation-delay: 2s;
+        }
+
+        @keyframes moveLight {
+            from { transform: rotate(20deg); opacity: 0.5; }
+            to { transform: rotate(40deg); opacity: 0.2; }
+        }
+
+        /* --- Skor Tabelası --- */
+        .scoreboard {
+            position: absolute;
+            top: 20px;
+            background: #222;
+            border: 2px solid #555;
+            padding: 10px 40px;
+            border-radius: 10px;
+            font-family: 'Russo One', sans-serif;
+            font-size: 2rem;
+            color: #f1c40f;
+            z-index: 2;
+            box-shadow: 0 0 20px rgba(241, 196, 15, 0.3);
+        }
+
+        /* --- Soru Başlığı --- */
+        .match-title {
+            margin-bottom: 40px;
+            font-size: 1.5rem;
+            background: rgba(0,0,0,0.6);
+            padding: 10px 20px;
+            border-radius: 20px;
+            z-index: 2;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 3px solid #e74c3c;
+        }
+
+        /* --- Kart Alanı (Ring) --- */
+        .ring {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            z-index: 2;
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #ffffff, #e6e6e6);
+            border-radius: 20px;
+            width: 300px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Yaylanma efekti */
+            box-shadow: 0 20px 30px rgba(0,0,0,0.5);
+            position: relative;
+            border: 5px solid transparent;
+        }
+
+        .card:hover {
+            transform: translateY(-20px) scale(1.05);
+            box-shadow: 0 30px 50px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Sol Köşe (Mavi) */
+        .card-left:hover { border-color: #3498db; }
+        /* Sağ Köşe (Kırmızı) */
+        .card-right:hover { border-color: #e74c3c; }
+
+        .card-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+
+        .card-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .card-value {
+            font-family: 'Russo One', sans-serif;
+            font-size: 2rem;
+            color: #2c3e50;
+        }
+
+        /* VS Logosu */
+        .vs-badge {
+            font-family: 'Russo One', sans-serif;
+            font-size: 3rem;
+            color: #fff;
+            background: #e74c3c;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px #e74c3c;
+            border: 4px solid #fff;
+        }
+
+        /* Sonuç Göstergeleri */
+        .winner {
+            background: #2ecc71; /* Yeşil */
+            color: white;
+            border-color: #fff;
+            transform: scale(1.1);
+        }
+        .winner .card-value { color: white; }
+
+        .loser {
+            opacity: 0.5;
+            filter: grayscale(100%);
+            transform: scale(0.9);
+        }
+
+        /* Final Ekranı */
+        .final-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .confetti {
+            font-size: 4rem;
+            animation: spin 2s infinite linear;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .back-btn {
+            position: absolute;
+            top: 20px; left: 20px;
+            color: #aaa;
+            text-decoration: none;
+            border: 1px solid #555;
+            padding: 5px 15px;
+            border-radius: 5px;
+            z-index: 5;
+        }
+
+        /* Mobil */
+        @media (max-width: 768px) {
+            .ring { flex-direction: column; gap: 20px; }
+            .card { width: 80%; height: 200px; flex-direction: row; justify-content: space-around; }
+            .card-icon { font-size: 3rem; margin: 0; }
+            .vs-badge { width: 50px; height: 50px; font-size: 1.5rem; margin: -10px; z-index: 3; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="spotlight" style="left: 20%;"></div>
+    <div class="spotlight"></div>
+
+    <a href="index.html" class="back-btn">⬅ Çıkış</a>
+
+    <div class="scoreboard">SKOR: <span id="score">0</span></div>
+
+    <div class="match-title" id="question-text">HANGİSİ DAHA BÜYÜK?</div>
+
+    <div class="ring" id="arena">
+        
+        <div class="card card-left" id="card-1" onclick="chooseWinner(0)">
+            <div class="card-icon" id="icon-1">🦁</div>
+            <div>
+                <div class="card-name" id="name-1">Aslan Takımı</div>
+                <div class="card-value" id="val-1">1.500</div>
+            </div>
+        </div>
+
+        <div class="vs-badge">VS</div>
+
+        <div class="card card-right" id="card-2" onclick="chooseWinner(1)">
+            <div class="card-icon" id="icon-2">🐯</div>
+            <div>
+                <div class="card-name" id="name-2">Kaplan Takımı</div>
+                <div class="card-value" id="val-2">1.450</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="final-screen" id="end-screen">
+        <div class="confetti">🏆</div>
+        <h1 style="font-size: 3rem; color: #f1c40f; margin: 10px;">ŞAMPİYON!</h1>
+        <p style="font-size: 1.5rem; color: #ddd;">Matematik Ligi'ni başarıyla tamamladın.</p>
+        <p>Büyük sayıları karşılaştırmada ustasın.</p>
+        <br>
+        <a href="index.html" style="background: #e74c3c; color: white; padding: 15px 30px; border-radius: 30px; text-decoration: none; font-weight: bold;">Ana Menüye Dön</a>
+    </div>
+
+    <script>
+        // --- MAÇ VERİLERİ ---
+        const matches = [
+            {
+                question: "Hangi Şehrin Nüfusu Daha Fazla?",
+                c1: { name: "Ankara", val: 5800000, icon: "🏙️" },
+                c2: { name: "İzmir", val: 4500000, icon: "🌊" }
+            },
+            {
+                question: "Hangi Sayı Daha Büyüktür? (Basamak Sayısına Dikkat!)",
+                c1: { name: "A Sayısı", val: 9999999, icon: "🅰️" }, // 7 Basamak
+                c2: { name: "B Sayısı", val: 10000000, icon: "🅱️" } // 8 Basamak (Kritik kazanım)
+            },
+            {
+                question: "Hangi Mesafe Daha Uzak?",
+                c1: { name: "Ay'a Yolculuk", val: 384400, icon: "🌙" },
+                c2: { name: "Dünya Çevresi", val: 40075, icon: "🌍" }
+            },
+            {
+                question: "Hangi Bütçe Daha Büyük?",
+                c1: { name: "Proje X", val: 250000500, icon: "💰" }, // 250 Milyon 500
+                c2: { name: "Proje Y", val: 250000050, icon: "💸" }  // 250 Milyon 50 (Sıralama kazanımı)
+            },
+            {
+                question: "Hangisi Daha Fazla?",
+                c1: { name: "Bir Milyar", val: 1000000000, icon: "1️⃣" },
+                c2: { name: "Dokuz Yüz Milyon", val: 900000000, icon: "9️⃣" }
+            }
+        ];
+
+        let currentRound = 0;
+        let score = 0;
+        let canClick = true;
+
+        window.onload = loadRound;
+
+        function loadRound() {
+            if (currentRound >= matches.length) {
+                endGame();
+                return;
+            }
+
+            const match = matches[currentRound];
+            
+            // Başlığı Ayarla
+            document.getElementById('question-text').innerText = match.question;
+
+            // Kart 1 Verileri
+            document.getElementById('name-1').innerText = match.c1.name;
+            document.getElementById('icon-1').innerText = match.c1.icon;
+            document.getElementById('val-1').innerText = formatNumber(match.c1.val);
+
+            // Kart 2 Verileri
+            document.getElementById('name-2').innerText = match.c2.name;
+            document.getElementById('icon-2').innerText = match.c2.icon;
+            document.getElementById('val-2').innerText = formatNumber(match.c2.val);
+
+            // Stilleri Sıfırla
+            resetCardStyles();
+            canClick = true;
+        }
+
+        function chooseWinner(selectedIndex) {
+            if (!canClick) return;
+            canClick = false;
+
+            const match = matches[currentRound];
+            const val1 = match.c1.val;
+            const val2 = match.c2.val;
+            
+            // Hangisi gerçekten büyük? (0: Sol, 1: Sağ)
+            const actualWinnerIndex = val1 > val2 ? 0 : 1;
+            
+            const card1 = document.getElementById('card-1');
+            const card2 = document.getElementById('card-2');
+
+            // Görsel Geri Bildirim
+            if (actualWinnerIndex === 0) {
+                card1.classList.add('winner');
+                card2.classList.add('loser');
+            } else {
+                card2.classList.add('winner');
+                card1.classList.add('loser');
+            }
+
+            // Puan Kontrolü
+            if (selectedIndex === actualWinnerIndex) {
+                score += 10;
+                document.getElementById('score').innerText = score;
+                // Doğru ses efekti (Opsiyonel)
+            } else {
+                // Yanlış yaptığında uyarı titreşimi eklenebilir
+                alert("Dikkat! Basamak sayılarını ve soldan sağa rakamları kontrol et.");
+            }
+
+            // Sonraki tura geçiş
+            setTimeout(() => {
+                currentRound++;
+                loadRound();
+            }, 2000);
+        }
+
+        // Sayıları noktalı formata çevirir (1.000.000 gibi)
+        function formatNumber(num) {
+            return num.toLocaleString('tr-TR');
+        }
+
+        function resetCardStyles() {
+            const c1 = document.getElementById('card-1');
+            const c2 = document.getElementById('card-2');
+            c1.className = "card card-left";
+            c2.className = "card card-right";
+        }
+
+        function endGame() {
+            document.getElementById('arena').style.display = 'none';
+            document.getElementById('question-text').style.display = 'none';
+            document.getElementById('end-screen').style.display = 'flex';
+        }
+
+    </script>
+</body>
+</html>
